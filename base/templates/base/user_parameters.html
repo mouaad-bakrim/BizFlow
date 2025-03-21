@@ -1,0 +1,191 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% block title %}Mon compte | {% endblock %}
+
+{% block css %}
+{% endblock css %}
+
+
+{% block toolbar %}
+<!--begin::Page title-->
+<div id="kt_app_toolbar" class="app-toolbar  pt-6 pb-2 rounded-top" >
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Paramètres</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="{% url 'dashboard:dashboard' %}" class="text-muted text-hover-primary">Accueil</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">Mon compte</li>
+                <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+        
+    </div>
+    <!--end::Toolbar container-->
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="">
+
+    <div class="card mt-4  shadow-sm border-2">
+        <!--begin::Card header-->
+        <div class="card-header " >
+            <!--begin::Card title-->
+            <div class="card-title m-0">
+                <h3 class="fw-bolder m-0">Informations générales</h3>
+            </div>
+            <!--end::Card title-->
+        </div>
+        <!--begin::Card header-->
+        <!--begin::Content-->
+        <div id="kt_account_profile_details" class="collapse show">
+            <!--begin::Form-->
+            <form id="kt_account_profile_details_form" class="form"  autocomplete="off"  method="post">
+                {% csrf_token %}
+                <!--begin::Card body-->
+                <div class="card-body border-top p-9">
+                    {% if messages %}
+                                <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                                        {% for message in messages %}
+                                            <div {% if message.tags %} class="d-flex align-items-center bg-light-{{ message.tags }} rounded p-5 mb-7"{% endif %}  role="alert" style="width: 100%;"><b>{{ message }}</b></div>
+                                        {% endfor %}
+                                </div>
+                    {% endif %}
+                    {% comment %} Cas des erreurs sur le formulaire {% endcomment %}
+                    {% if form.non_field_errors %}
+                                <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                                    <div class="d-flex align-items-center bg-light-danger rounded p-5 mb-7" role="alert" style="width: 100%;"><b>{{ form.non_field_errors }}</b></div>
+                                </div>
+                    {% endif %}
+
+                    <!--begin::Input group-->
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label required fw-bold fs-6">Nom complet</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            <!--begin::Row-->
+                            <div class="row">
+                                <!--begin::Col-->
+                                <div class="col-lg-6 fv-row">
+                                    {{form.first_name}}
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        {{ form.first_name.errors }}
+                                    </div>
+                                    {% comment %} <input type="text" name="fname" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="Prénom" value="Max" /> {% endcomment %}
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6 fv-row">
+                                    {{form.last_name}}
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                            {{ form.last_name.errors }}
+                                    </div>
+                                    {% comment %} <input type="text" name="lname" class="form-control form-control-lg form-control-solid" placeholder="Nom de famille" value="Smith" /> {% endcomment %}
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label fw-bold fs-6">Société</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row">
+                            {{form.company}}
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                    {{ form.email.errors }}
+                            </div>
+                            {% comment %} <input type="text" name="company" class="form-control form-control-lg form-control-solid" placeholder="Company name" value="Keenthemes" /> {% endcomment %}
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label fw-bold fs-6">
+                            <span>Numéro de téléphone</span>
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Au format 06 06 06 06 06"></i>
+                        </label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row">
+                            {{form.phone}}
+                            <div class="fv-plugins-message-container invalid-feedback">
+                                    {{ form.phone.errors }}
+                            </div>
+                            {% comment %} <input type="tel" name="phone" class="form-control form-control-lg form-control-solid" placeholder="Phone number" value="044 3276 454 935" /> {% endcomment %}
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="row mb-0">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label fw-bold fs-6">E-mail de confirmation de commande</label>
+                        <!--begin::Label-->
+                        <!--begin::Label-->
+                        <div class="col-lg-8 d-flex align-items-center">
+                            <div class="form-check form-check-solid form-switch fv-row">
+                                {{form.notif_email}}
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                        {{ form.notif_email.errors }}
+                                </div>
+                                {% comment %} <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing" checked="checked" /> {% endcomment %}
+                                <label class="form-check-label" for="id_notif_email"></label>
+                            </div>
+                        </div>
+                        <!--begin::Label-->
+                    </div>
+                    <!--end::Input group-->
+                </div>
+                <!--end::Card body-->
+                <!--begin::Actions-->
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button type="reset" class="btn btn-white btn-active-light-primary me-2">Réinitialiser</button>
+                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Enregistrer les modifications</button>
+                </div>
+                <!--end::Actions-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Content-->
+    </div>
+    </div>
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+{% comment %} <script>
+</script> {% endcomment %}
+{% endblock javascript%}

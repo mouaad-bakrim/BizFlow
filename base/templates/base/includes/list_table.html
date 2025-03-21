@@ -1,7 +1,7 @@
 
 {% load django_tables2 %}
 
-<main class="col-sm col pt-0 order-3 order-xxl-1 p-0 mt-4" id="main-table">
+<main class="col-sm col pt-0 order-3 order-xxl-1 p-0" id="main-table">
 <div class="card mb-md-5 mb-xl-10 card-flush shadow-sm" id="list_table_id">
     <!--begin::Card header-->
     <div class="card-header">
@@ -19,11 +19,11 @@
                         hx-indicator=".table_progress"
                         hx-replace-url="false"
                         hx-include="#filterForm"
-                        name="per_page">
-
-                        <option value="50" {% if per_page == "50" or per_page == 50 %} selected {% endif%} >50</option>
-                        <option value="100" {% if per_page == '100' or per_page == 100 %} selected {% endif%} >100</option>
-                        <option value="200" {% if per_page == '200' or per_page == 200 %} selected {% endif%} >200</option>
+                        name="per_page"> 
+                        <option value="20" {% if per_page == "20" or per_page == 20 %} selected {% endif%} >20</option> 
+                        <option value="50" {% if per_page == "50" or per_page == 50 %} selected {% endif%} >50</option> 
+                        <option value="100" {% if per_page == '100' or per_page == 100 %} selected {% endif%} >100</option> 
+                        <option value="200" {% if per_page == '200' or per_page == 200 %} selected {% endif%} >200</option> 
                         <option value="500" {% if per_page == '500' or per_page == 500 %} selected {% endif%} >500</option>
                         <option value="1000" {% if per_page == '1000' or per_page == 1000 %} selected {% endif%} >1000</option>
                         <option value="5000" {% if per_page == '5000' or per_page == 5000 %} selected {% endif%} >5000</option>
@@ -47,11 +47,11 @@
                         {% else %}
                         <li class="page-item previous disabled px-0"><a href="#" class="page-link"><i class="fa fa-chevron-left"></i></a></li>
                         {% endif %}
-
+                        
                         <li class="page-item disabled">
-                            <span  class="page-link">Page {{table.page.number}} / {{ table.paginator.num_pages }}<span class="d-none d-sm-block ">&nbsp;- {{ table.rows | length }} éléments </span></span>
+                            <span  class="page-link">Page {{table.page.number}} / {{ table.paginator.num_pages }}<span class="d-none d-sm-block ">&nbsp;- {{ table.rows | length }} éléments </span></span>    
                         </li>
-
+        
                         {% if table.page.has_next %}
                             {% comment %} <li class="page-item next"><a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}"  class="page-link"><i class="next"></i></a></li> {% endcomment %}
                             <li class="next page-item">
@@ -104,29 +104,3 @@
     <!--end::Card body-->
 </div>
 </main>
-<script>
-    function toggleFilterCard() {
-        var filterCard = document.getElementById('filterCard');
-        var funnelIcon = document.getElementById('funnel-icon-id');
-        var element = document.getElementById('someId');
-        element.indeterminate = true;
-
-        var checkbox = document.getElementById('myCheckbox');
-if (checkbox) {
-    checkbox.indeterminate = true;
-}
-        if (filterCard.classList.contains('collapse')) {
-            filterCard.classList.remove('collapse');
-            funnelIcon.classList.remove('bi-funnel');
-            funnelIcon.classList.add('bi-funnel-fill');
-        } else {
-            filterCard.classList.add('collapse');
-            funnelIcon.classList.remove('bi-funnel-fill');
-            funnelIcon.classList.add('bi-funnel');
-        }
-
-        // Enregistrer l'état du menu filtre côté serveur
-        var isExpanded = !filterCard.classList.contains('collapse');
-        fetch(`/save_filter_state/${isExpanded ? 'true' : 'false'}`, { method: 'GET' });
-    }
-</script>

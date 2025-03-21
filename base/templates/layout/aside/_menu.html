@@ -1,148 +1,330 @@
 {% load static %}
-
-<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true"
-     data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}"
-     data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start"
-     data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle" style="background-color: #063751;">
-    <!--begin::Logo-->
-    <div class="app-sidebar-logo px-6 py-3" id="kt_app_sidebar_logo" style="text-align: center;">
-
-        <a href="" class="{% if not request.user.is_superuser %}d-none{% endif %}">
-            <img alt="Logo" src=""
-                 class="h-65px w-200px app-sidebar-logo-default"/>
-            <img alt="Logo" src=""
-                 class="h-25px app-sidebar-logo-minimize"/>
-        </a>
-
-
-
-        <div id="kt_app_sidebar_toggle"
-             class="app-sidebar-toggle btn btn-icon btn-sm h-40px w-40px position-absolute top-50 start-100 translate-middle"
-             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
-             data-kt-toggle-name="app-sidebar-minimize"
-             style="border-radius: 50%; background-color: #111827; box-shadow: 0px 0px 15px rgba(0, 255, 234, 0.7); transition: box-shadow 0.3s ease;">
-            <i class="ki-duotone ki-black-left-line fs-3 rotate-180"
-               style="color: #00FFEA; text-shadow: 0px 0px 8px #00FFEA;">
-                <span class="path1"></span>
-                <span class="path2"></span>
-            </i>
-        </div>
+<!--begin::Sidebar-->
+<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+	<!--begin::Wrapper-->
+	<div id="kt_app_sidebar_wrapper" class="app-sidebar-wrapper">
+		<div class="hover-scroll-y my-5 my-lg-2 mx-2" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_header" data-kt-scroll-wrappers="#kt_app_sidebar_wrapper" data-kt-scroll-offset="5px">
+			<!--begin::Sidebar menu-->
+			<div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false" class="app-sidebar-menu-primary menu menu-column menu-rounded menu-sub-indention menu-state-bullet-primary px-3 mb-5">
+							<!--begin:Menu item-->
+							<div class="menu-item {% if active_menu == 'dashboard' %}here show{% endif %}">
+								<!--begin::Menu link-->
+								<a class="menu-link {% if active_item == 'dashboard' %}active{% endif %}" href="{% url 'dashboard:dashboard' %}">
+									<!--begin::Bullet--> 
+									<span class="menu-icon">
+										<i class="bi bi-house fs-2"></i>
+									</span>
+									<!--end::Bullet--> 
+							
+									<!--begin::Title-->
+									<span class="menu-title">
+										TABLEAU DE BORD
+									</span>
+									<!--end::Title-->                                  
+								</a>
+								<!--end::Menu link-->                
+							</div>
+							<!--end:Menu item-->
 
 
-        <!--end::Sidebar toggle-->
-    </div>
-    <!--end::Logo-->
-    <!--begin::sidebar menu-->
-    <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
-        <!--begin::Menu wrapper-->
-        <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper">
-            <!--begin::Scroll wrapper-->
-            <div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true"
-                 data-kt-scroll-activate="true" data-kt-scroll-height="auto"
-                 data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
-                 data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px"
-                 data-kt-scroll-save-state="true">
-                <!--begin::Menu-->
-                <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6"
-                     id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-                        <!--begin:Menu link-->
-                        {% if request.user.is_superuser %}
-                        <a href="">
-
-                            {% else %}
-                            <a href="">
-
-                                {% endif %}
-
-                                <span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-element-11 fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-														<span class="path4"></span>
-													</i>
-												</span>
-												<span class="menu-title">Dashboards</span>
-
-											</span>
-                            </a>
-                        </a>
-                    </div>
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Invoice</span>
-                        </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <div data-kt-menu-trigger="click"
-                         class="menu-item menu-accordion  {% if active_menu == 'clients' %}here show{% endif %} ">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
+							
+							
+							{% if user.is_internal %}
+							{% if perms.client.view_client %}
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if active_menu == 'clients' %}here show{% endif %} ">
+									<!--begin:Menu link-->
+									<span class="menu-link">
 										<span class="menu-icon">
 											<i class="bi bi-people fs-2">
 											</i>
 										</span>
-										<span class="menu-title">Ocr Invoice</span>
+										<span class="menu-title">CLIENTS</span>
 										<span class="menu-arrow"></span>
 									</span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link {% if active_item == 'client_create'  and active_menu == 'clients'  %}active{% endif %}"
-                                   href="{% url 'invoice:upload_invoice' %}">
+									<!--end:Menu link-->
+									<!--begin:Menu sub-->
+									<div class="menu-sub menu-sub-accordion">
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'client_list'  and active_menu == "clients"  %}active{% endif %}"
+											href="{% url 'client:listClient' %}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                    <span class="menu-title">Upload</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-
-                                <a class="menu-link {% if active_item == 'client_list'  and active_menu == 'clients'  %}active{% endif %}"
-                                   href="{% url 'invoice:invoice_list' %}">
+												<span class="menu-title">Clients</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'bookmarked_client_list'  and active_menu == "clients"  %}active{% endif %}"
+											href="{% url 'client:listBookmarkedClient' %}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                    <span class="menu-title">Liste</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
+												<span class="menu-title">Clients suivis</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+									
+									</div>
+									<!--end:Menu sub-->
+								</div>
+							{% endif %}
+							{% if perms.order.view_order or perms.order.add_order %}
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if active_menu == 'orders' %}here show{% endif %} ">
+									<!--begin:Menu link-->
+									<span class="menu-link">
+										<span class="menu-icon">
+											<i class="bi bi-cart2 fs-2">
+											</i>
+										</span>
+										<span class="menu-title">COMMANDES</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<!--end:Menu link-->
+									<!--begin:Menu sub-->
+									<div class="menu-sub menu-sub-accordion">
+									{% if user.is_internal and perms.order.add_order %}
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'order_add' %}active{% endif %}"
+											href="#" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Nouvelle commande</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+									{% endif %}
+									{% if perms.order.view_order %}
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if filter_status != 'scdraft' and  active_item == 'order_list' and not client_id %}active{% endif %}"
+											href="{% url 'order:order_list' %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Toutes les commandes</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+									{% endif %}
+									{% if perms.order.view_order and perms.order.can_confirm_order %}
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if filter_status == 'scdraft' and active_item == 'order_list' and not client_id %}active{% endif %}"
+											href="{% url 'order:order_list_per_state' 'scdraft' %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Commandes à accepter</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+									{% endif %}
+									</div>
+									<!--end:Menu sub-->
+								</div>
+							{% endif %}
 
-                        </div>
-                        <!--end:Menu sub-->
-                    </div>
+							{% if perms.helpdesk.view_ticket or  perms.helpdesk.add_ticket %}
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if active_menu == 'tickets' %}here show{% endif %} ">
+									<!--begin:Menu link-->
+									<span class="menu-link">
+										<span class="menu-icon">
+											<i class="bi bi-headset fs-2">
+											</i>
+										</span>
+										<span class="menu-title">SERVICE-CLIENT</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<!--end:Menu link-->
+									<!--begin:Menu sub-->
+									<div class="menu-sub menu-sub-accordion">
+									{% if perms.helpdesk.add_ticket %}
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'add'  and active_menu == "tickets"  %}active{% endif %}"
+											href="{% url 'helpdesk:ticket_add' %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Nouveau ticket</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+									{% endif %}
+									{% if perms.helpdesk.view_ticket %}
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'all'  and active_menu == "tickets"  %}active{% endif %}"
+											href="{% url 'helpdesk:listTicket' %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Tous les tickets</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'assigned'  and active_menu == "tickets"  %}active{% endif %}"
+											href="{% url 'helpdesk:listAssignedTicket' %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Mes tickets</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+									{% endif %}
+									</div>
+									<!--end:Menu sub-->
+								</div>
+							{% endif %}
 
+							{% else %}
 
+							
+							{% comment %} <!--start:Menu item-->
+							<div class="menu-item pt-5">
+								<!--begin:Menu content-->
+								<div class="menu-content">
+									<span class="menu-heading fw-bold text-uppercase fs-7">Mes</span>
+								</div>
+								<!--end:Menu content-->
+							</div>
+							<!--end:Menu item--> {% endcomment %}
+							<!--begin:Menu item-->
+							{% with user.clientuser_set.all as clients %}
+								{% for cu in clients %}
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if client_id == cu.client.pk or clients|length == 1  %}here show{% endif %} ">
+									<!--begin:Menu link-->
+									<span class="menu-link">
+										<span class="menu-icon">
+											<i class="bi bi-person-vcard fs-2">
+											</i>
+										</span>
+										<span class="menu-title">{{ cu.client.name }}</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<!--end:Menu link-->
+									<!--begin:Menu sub-->
+									<div class="menu-sub menu-sub-accordion">
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'order_list' and client_id == cu.client.id %}active{% endif %}"
+											href="{% url 'order:order_list' client_id=cu.client.pk %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Commandes</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'order_add' and client_id == cu.client.id %}active{% endif %}"
+											href="{% url 'order:order_add' client_id=cu.client.pk %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Nouvelle Commande</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link {% if active_item == 'product_list' and client_id == cu.client.id %}active{% endif %}"
+											href="{% url 'product:product_list' client_id=cu.client.pk %}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Catalogue</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										{% comment %} <div class="menu-item">
+											<!--begin:Menu link-->
+										<a class="menu-link {% if active_item == 'facture_list' and client_id == cu.client.id %}active{% endif %}"
+														href="{% url 'invoice:facture_list' client_id=cu.client.pk %}">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Mes Factures</span>
+										</a>
+											<!--end:Menu link-->
+										</div> {% endcomment %}
+										{% comment %} <div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link" href="">
+																	<span class="menu-bullet">
+																		<span class="bullet bullet-dot"></span>
+																	</span>
+												<span class="menu-title">Postes non soldés</span>
+											</a>
+											<!--end:Menu link-->
+										</div> {% endcomment %}
+									
+									
+									</div>
+									<!--end:Menu sub-->
+								</div>
+								{% endfor %}
+							{% endwith %}
 
-
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
+							{% if perms.helpdesk.add_ticket %}
+							<!--begin:Menu item-->
+							<div class="menu-item {% if active_menu == 'tickets' %}here show{% endif %}">
+								<!--begin::Menu link-->
+								<a class="menu-link {% if active_menu == 'tickets' %}active{% endif %}" href="{% url 'helpdesk:ticket_add' %}">
+									<!--begin::Bullet--> 
+									<span class="menu-icon">
+										<i class="bi bi-question-diamond fs-2"></i>
+									</span>
+									<!--end::Bullet--> 
+							
+									<!--begin::Title-->
+									<span class="menu-title">
+										Question & Réclamation ?
+									</span>
+									<!--end::Title-->                                  
+								</a>
+								<!--end::Menu link-->                
+							</div>
+							<!--end:Menu item-->
+							{% endif %}
+							{% endif %}
+						
+						
+						</div>
+						<!--end::Menu-->
+		</div>
+	</div>
+	<!--end::Wrapper-->
 </div>
-<script>
-    $(document).ready(function () {
-    $('[data-kt-menu-trigger="click"]').on('click', function (e) {
-        e.stopPropagation(); // Empêche la propagation de l'événement
-        $(this).find('.menu-sub').toggle(); // Affiche ou masque le sous-menu
-    });
-});
-
-</script>
+<!--end::Sidebar-->

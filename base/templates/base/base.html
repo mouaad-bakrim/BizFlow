@@ -1,8 +1,10 @@
 {% load static %}
+{% load sc_settings_value %}
 <html lang="fr">
 <!--begin::Head-->
 <head>
-
+    
+    <title>{% block title %}{% endblock title %} {% sc_settings_value "APPLICATION_NAME" %}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/logo/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/logo/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/logo/favicon/favicon-16x16.png">
@@ -24,7 +26,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
     <link href="{% static 'assets/plugins/global/plugins.css'%}" rel="stylesheet" type="text/css"/>
-    <link href="{% static 'assets/css/style.css'%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/css/style.bundle.css'%}" rel="stylesheet" type="text/css"/>
     <script src="{% static 'assets/js/htmx.min.js' %}" defer></script>
     <link href="{% static 'assets/css/flowboxes.css' %}" rel="stylesheet" type="text/css" />
 
@@ -34,19 +36,22 @@
             font-size: 22px;
         }
     </style>
-    {% block css %}
+    {% block css %} 
     {% endblock css %}
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-		<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
-
+	<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" 
+        data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" 
+        data-kt-app-sidebar-push-footer="true" data-kt-app-aside-enabled="false" data-kt-app-aside-fixed="false" 
+        data-bs-app-header-height="80px" data-kt-app-sidebar-mobile-height="175px" bs-app-header-height="80px"
+        data-kt-app-aside-push-toolbar="false" data-kt-app-aside-push-footer="true" class="app-default">
+<!--begin::Theme mode setup on page load-->
 <script>
     var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }
 </script>
 <!--end::Theme mode setup on page load-->
 <!--begin::App-->
-
 <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
     <!--begin::Page-->
     <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -73,9 +78,10 @@
                     </div>
                     <!--end::Toolbar-->
                     <!--begin::Content-->
-                 <div id="kt_app_content" class="app-content flex-column-fluid" style="background-color: #e4e5e6;">
+                    <div id="kt_app_content" class="app-content flex-column-fluid  border-0" >
                         <!--begin::Content container-->
-                        <div id="kt_app_content_container" class="app-container container-fluid">
+                        <div id="kt_app_content_container" class="app-container  container-fluid border-0 ">
+
                             {% if messages %}
                             <div class="card my-3 mb-3">
                                 <div class="card-body py-2">
@@ -92,7 +98,7 @@
                             {% block content %}
 
                             {% endblock %}
-
+                            {% include "order/order_add_modal.html" %}
                         </div>
                         <!--end::Content container-->
                     </div>
@@ -125,6 +131,9 @@
 
 
 <script src="{% static 'admin/js/vendor/select2/select2.full.js' %}"></script>
+<script src="{% static 'autocomplete_light/autocomplete_light.js' %}"></script>
+<script src="{% static 'autocomplete_light/select2.js' %}"></script>
+<script src="{% static 'autocomplete_light/i18n/en.js' %}"></script>
 
 {% block javascript %}
 

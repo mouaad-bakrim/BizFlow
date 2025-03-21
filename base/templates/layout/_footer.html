@@ -1,45 +1,37 @@
-<div id="kt_app_footer" class="app-footer bg-light text-dark">
-    <!--begin::Footer container-->
-    <div class="app-container container-fluid d-flex flex-column flex-md-row justify-content-between py-4">
-        <!--begin::Logo-->
-           <div class="order-1 order-md-1 mb-3 mb-md-0">
-    {% if user_sites %}
-        <a href="#" class="text-dark fw-bold fs-5">
-   {% if user_sites|length == 1 %}
-                {{ user_sites.0.nom }}
-            {% else %}
-                Administration
-            {% endif %}
-        </a>
+{% load sc_settings_value %}
 
-    {% else %}
-        <a href="#" class="text-dark fw-bold fs-5">Administration</a>
 
-    {% endif %}
-    <span class="menu-arrow d-lg-none"></span>
-</div>
-        <!--end::Logo-->
-
-        <!--begin::Menu-->
-        <ul class="menu menu-dark fw-semibold order-2 d-flex">
-            <li class="menu-item">
-                <a href="" target="_blank" class="menu-link px-3">Nous contacter</a>
-            </li>
-            <li class="menu-item">
-                <a href="" target="_blank" class="menu-link px-3">Support</a>
-            </li>
-            <li class="menu-item">
-                <a href="" target="_blank" class="menu-link px-3">Achat</a>
-            </li>
-        </ul>
-        <!--end::Menu-->
-
-        <!--begin::Copyright-->
-        <div class="text-gray-600 order-3">
-            <span class="text-muted fw-semibold me-1">{% now "Y" %}&copy;</span>
-            <a href="" target="_blank" class="text-dark text-hover-primary">Tous droits réservés</a>
-        </div>
-        <!--end::Copyright-->
-    </div>
-    <!--end::Footer container-->
-</div>
+	<div id="kt_app_footer" class="app-footer">
+					<!--begin::Footer container-->
+					<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
+						<!--begin::Copyright-->
+						<div class="text-gray-900 order-2 order-md-1">
+							<span class="text-muted fw-semibold me-">&copy; {% now "Y" %}</span>
+							<a href="{% sc_settings_value "COMPANY_WEBSITE" %}" target="_blank" class="text-muted fw-semibold  text-hover-primary">{% sc_settings_value "COMPANY_NAME" %}</a>
+						</div>
+						<!--end::Copyright-->
+						{% if not user.is_internal %}
+						<!--begin::Menu-->
+						<ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+							{% sc_settings_value "FAQ_ACTIVATED" as activate_faq %}
+							{% if activate_faq %}
+							<li class="menu-item">
+								<a href="{% url 'faq:faq' %}" class="menu-link px-2">Support</a>
+							</li>
+							{% endif %}
+							{% if perms.helpdesk.add_ticket %}
+							<li class="menu-item">
+								<a href="{% url "helpdesk:ticket_add" %}" class="menu-link px-2">Nous contacter</a>
+							</li>
+							{% endif %}
+							{% for doc_category in user.get_actif_legal_documents %}
+							<li class="menu-item">
+								<a href="{% url 'cgu:legal_document_category_detail' doc_category.slug %}" class="menu-link px-2">{{ doc_category.name }}</a>
+							</li>
+							{% endfor %}
+						</ul>
+						<!--end::Menu-->
+						{% endif %}
+					</div>
+					<!--end::Footer container-->
+	</div>	

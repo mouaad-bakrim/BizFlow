@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+{% load django_tables2 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Mes notifications |{% endblock %}
+
+{% block css %} 
+<link href="{% static 'assets/css/orderly_table.css'%}" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+
+{% block toolbar %}
+
+<div id="kt_app_toolbar" class="app-toolbar  pt-6 pb-2 rounded-top">
+    <!--begin::Toolbar container-->
+    <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+            <!--begin::Title-->
+            <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Mes notifications</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-muted">
+                    <a href="{% url 'dashboard:dashboard' %}" class="text-muted text-hover-primary">Accueil</a>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+            <!--begin::Item-->
+            <li class="breadcrumb-item text-muted">
+                <a href="{% url 'base:my_notifications' %}" class="text-muted text-hover-primary">Mes notifications</a>
+            </li>
+            <!--end::Item-->
+            </ul>
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+    </div>
+    <!--end::Toolbar container-->
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="row xxl-flex-nowrap">
+    {% include 'base/includes/list_table.html' %}
+    {% include 'base/includes/list_filter.html' %}
+</div>
+{% endblock content %}
+
+
+
+{% block javascript %}
+
+    <script>
+        $(".dateinput").flatpickr({
+            dateFormat: "d/m/Y",    
+            "locale": "fr"
+        });
+        $(".mae-filter-form").find('input,textarea').addClass("form-control form-control-solid");
+        $(".mae-filter-form").find('select').addClass("form-select");
+    </script>
+
+
+{% endblock javascript%}

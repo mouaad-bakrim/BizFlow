@@ -1,0 +1,23 @@
+{% load sc_settings_value %}
+Bonjour,
+
+Nous avons le plaisir de vous informer que votre compte a été créé avec succès sur le portail {% sc_settings_value "APPLICATION_NAME" %}.
+
+Ce portail vous offre la possibilité de :
+
+- Passer des commandes en ligne
+- Suivre l'avancement de vos livraisons
+- Rester informé de nos nouveautés et promotions
+- Communiquer facilement avec notre service client
+- Et bien plus encore...
+
+Pour définir votre mot de passe et vous connecter à votre compte, veuillez cliquer sur le bouton ci-dessous :
+
+{% sc_settings_value "STRIPPED_SITE_URL" %}{% url 'base:password_reset_confirm' uidb64=uid token=token %}
+
+Nous sommes ravis de vous compter parmi nos utilisateurs et espérons que vous apprécierez tous les avantages de notre portail.
+
+Cordialement,
+L'équipe {% sc_settings_value "APPLICATION_NAME" %}
+
+Cet email a été envoyé automatiquement, merci de ne pas y répondre.
