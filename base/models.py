@@ -4,7 +4,6 @@ from simple_history import register
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
-from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from simple_history.signals import pre_create_historical_record
 from django.dispatch import receiver
@@ -12,21 +11,13 @@ from django.conf import settings
 from tree_queries.models import TreeNode
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils import timezone
-from mailer import send_html_mail
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.template.loader import render_to_string
-import hashlib
-
-from .managers import BaseModelManager, CustomUserManager
 
 
 class AbstractBaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
-    objects = BaseModelManager()
+    # objects = BaseModelManager()
 
     class Meta:
         abstract = True

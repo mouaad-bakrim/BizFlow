@@ -11,7 +11,6 @@ from django.contrib.auth import get_permission_codename
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
 from django.db.models import JSONField
-from django_json_widget.widgets import JSONEditorWidget
 
 
 class SoftDeleteQuerySet(query.QuerySet):
@@ -88,9 +87,7 @@ def soft_delete(modeladmin, request, queryset):
 
 class BaseModelAdmin(SimpleHistoryAdmin):
     actions = [soft_delete]
-    formfield_overrides = {
-        JSONField: {'widget': JSONEditorWidget},
-    }
+
     def get_queryset(self, request):
         qs = super(BaseModelAdmin, self).get_queryset(request)
         return qs.filter(deleted=False)
