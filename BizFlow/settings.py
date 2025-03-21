@@ -26,7 +26,14 @@ SECRET_KEY = 'django-insecure-db_5d*a29nz8o!*_6w%*_6*y9(go3sjc#h*qrwnvaw%7!r9qkm
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# Base
+SITE_URL = 'http://localhost:8000/'
+APPLICATION_NAME = "LEMO Self-Care"
+COMPANY_NAME = "Les Eaux Minérales d'Oulmès"
+COMPANY_WEBSITE = "https://www.oulmes.ma/"
+MACHINE_ID = "2708ee62875a7e3dd7cfaba71606b37329e7546b824a07596ad88f880cb611f3"
+# APP_LOGO_PATH = "assets/media/logos/5c1v2s7d/" # Massar
+APP_LOGO_PATH = "assets/media/logos/base9d451f12/" # Base
 
 # Application definition
 
