@@ -7,7 +7,7 @@
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6 py-3" id="kt_app_sidebar_logo" style="text-align: center;">
 
-        <a href="{% url 'base:dashboard' %}" class="{% if not request.user.is_superuser %}d-none{% endif %}">
+        <a href="" class="{% if not request.user.is_superuser %}d-none{% endif %}">
             <img alt="Logo" src=""
                  class="h-65px w-200px app-sidebar-logo-default"/>
             <img alt="Logo" src=""
@@ -49,10 +49,10 @@
                     <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                         <!--begin:Menu link-->
                         {% if request.user.is_superuser %}
-                        <a href="{% url 'base:dashboard' %}">
+                        <a href="">
 
                             {% else %}
-                            <a href="{% url 'base:dashboard' %}">
+                            <a href="">
 
                                 {% endif %}
 

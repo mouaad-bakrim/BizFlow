@@ -1,0 +1,417 @@
+{% extends "base/base.html" %}
+{% load django_tables2 %}
+{% load static %}
+{% block title %}{% endblock %}
+
+{% block css %} 
+<style>
+    {% comment %} .carousel-caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    } {% endcomment %}
+
+</style>
+{% endblock css %}
+
+
+{% block toolbar %}
+
+<div id="kt_app_toolbar" class="app-toolbar pb-2 rounded-top" >
+</div>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="row gy-5 gx-xl-10 ">
+<div class="col-xl-9">
+
+  <div class="row gy-5 gx-xl-10 mb-xl-10 ">
+    <!--begin::Col-->
+    <div class="col-sm-12 col-xl-4">
+      
+        <!--begin::Card widget 2-->
+        <div class="card h-lg-100 shadow-sm {% if user.is_internal %}bg-success{% else %}bg-info{% endif %} text-white">
+            <!--begin::Body-->
+            <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                <!--begin::Icon-->
+                <div class="m-0">
+                    <i class="ki-duotone ki-user fs-2hx text-white">
+                        <span class="path1"></span><span class="path2"></span></span>
+                    </i>
+                </div>
+                <!--end::Icon-->
+                
+                <!--begin::Section-->
+                <div class="d-flex flex-column my-3">
+                    <!--begin::Greeting-->
+                    <span class="fw-semibold fs-3">Bonjour{% if user.first_name %} {{ user.first_name }}{% endif %} !</span>
+                    <!--end::Greeting-->
+                    
+                    <!--begin::Company-->
+                    <div class="m-0">
+                        <span class="fw-semibold fs-6  opacity-75">
+                          {% with clients=user.client_set.all %}
+                            {% if clients|length == 0 %}
+                              Aucun Compte client
+                            {% elif clients|length == 1 %}
+                              {{ clients.0 }}
+                            {% else %}
+                              {{ clients|length }} comptes clients
+                            {% endif %}
+                          {% endwith %}
+                        </span>
+                    </div>
+                    <!--end::Company-->
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Card widget 2-->
+      
+      
+    </div>
+    <!--end::Col-->   
+    
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-4">
+      
+      <!--begin::Card widget 2-->
+      <div class="card h-lg-100 shadow-sm bg-{% if nb_open_orders == 0%}primary{% else %}danger{% endif %} 
+      text-white ">
+        <!--begin::Body-->
+        <div class="card-body d-flex justify-content-between align-items-start flex-column ">         
+          <!--begin::Icon--> 
+          <div class="m-0">
+            <i class="ki-duotone ki-basket fs-2hx text-white ">
+              <span class="path1"></span>
+              <span class="path2"></span>
+              <span class="path3"></span>
+              <span class="path4"></span>
+            </i>                     
+            
+          </div>                           
+          <!--end::Icon-->
+          
+          <!--begin::Section--> 
+          <div class="d-flex flex-column my-3">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x lh-1 ls-n2">{{ nb_open_orders }}</span> 
+            <!--end::Number--> 
+            
+            <!--begin::Follower-->
+            <div class="m-0">
+              <span class="fw-semibold fs-6 opacity-75">
+                Commandes en cours                    
+              </span>  
+              
+            </div>       
+            <!--end::Follower--> 
+          </div>  
+          <!--end::Section-->          
+                          
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Card widget 2-->
+      
+      
+    </div>
+    <!--end::Col-->
+    
+    <!--begin::Col-->
+    <div class="col-sm-6 col-xl-4">
+      
+      <!--begin::Card widget 2-->
+      <div class="card h-lg-100 shadow-sm bg-{% if nb_open_tickets == 0%}primary{% else %}danger{% endif %} 
+      text-white">
+        <!--begin::Body-->
+        <div class="card-body d-flex justify-content-between align-items-start flex-column">         
+          <!--begin::Icon--> 
+          <div class="m-0">
+            <i class="ki-duotone ki-question fs-2hx text-white ">
+              <span class="path1"></span>
+              <span class="path2"></span>
+              <span class="path3"></span>
+            </i>
+          </div>                           
+          <!--end::Icon-->
+          
+          <!--begin::Section--> 
+          <div class="d-flex flex-column my-3">
+            <!--begin::Number-->           
+            <span class="fw-semibold fs-3x lh-1 ls-n2">{{ nb_open_tickets }}</span> 
+            <!--end::Number--> 
+            
+            <!--begin::Follower-->
+            <div class="m-0">
+              <span class="fw-semibold fs-6 opacity-75">
+                Tickets ouverts                   
+              </span>  
+              
+            </div>       
+            <!--end::Follower--> 
+          </div>  
+          <!--end::Section-->          
+                                    
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Card widget 2-->
+    </div>
+    <!--end::Col-->
+    
+  </div>
+
+
+  {% if banners %}
+  <div class="row mt-5 ">
+  <div id="carouselIndicators" class="carousel slide " data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        {% if banners|length > 1 %}
+        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        {% endif %}
+        {% if banners|length > 2 %}
+        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        {% endif %}
+      </div>
+      <div class="carousel-inner">
+          {% for banner in banners %}
+            <style>
+                @media (max-width: 767px) {
+                    #carousel-item-{{ banner.pk}} img {
+                        content: url("{{ banner.md_down_image.url }}");
+                    }
+                }
+            </style>
+            <div class="carousel-item {% if forloop.first %}active{% endif %} " id="carousel-item-{{ banner.pk}}">
+                <img src="{{ banner.md_up_image.url }}" class="d-block w-100 rounded" alt="{{ banner.title }}" >
+                <div class="carousel-caption d-none d-md-block" style="color: {{ banner.text_color }};">
+                <h5>{{ banner.title }}</h5>
+                <p>{{ banner.description }}</p>
+                </div>
+            </div>
+          {% endfor %}
+      </div>
+      {% if banners|length > 1 %}
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      {% endif %}
+  </div>
+  </div>
+  {% endif %}
+
+  <div class="row  gy-5 gx-xl-10 mt-5">
+    <div class="col-12 col-lg-6  mb-5 mb-xl-10">
+        <!--begin::Table Widget 4-->
+        <div class="card h-400px  shadow-sm border-2">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-800">Dernières commandes</span>
+                    {% comment %} <span class="text-gray-500 mt-1 fw-semibold fs-6">Avg. 57 orders per day</span> {% endcomment %}
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Card header-->
+
+            <!--begin::Card body-->
+            <div class="card-body pt-2 overflow-auto">
+                <!--begin::Table-->
+                <div class="table-responsive">
+                    <table class="table align-middle table-row-dashed fs-6 gy-3 dataTable">
+                        <!--begin::Table head-->
+                        <thead>
+                            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                <th class="">Référence</th>
+                                <th >Date</th>
+                                <th >Compte</th>
+                                <th class="text-center">Statut</th>
+                            </tr>
+                        </thead>
+                        <!--end::Table head-->
+
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                          {% for order in last_orders %}
+                            <tr>
+                                <td>
+                                    <a href="{{order.get_path}}" class="text-gray-800 text-hover-primary">
+                                      {{ order.external_id }}
+                                    </a>
+                                </td>
+                                <td >
+                                  {{ order.order_date|date:"d/m/Y" }}
+                                </td>
+                                <td >
+                                  {{ order.client }}
+                                </td>
+                                <td class="text-center">
+                                    {{ order.get_status_html_tag |  safe }}
+                                </td>
+                            </tr>
+                            <!-- Repeat similar structure for other rows -->
+
+                          {% empty %}
+                            <tr>
+                              <td colspan="4" class="text-center text-gray-600 ">Aucune commande passée</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                </div>
+                <!--end::Table-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Table Widget 4-->
+    </div>
+
+
+    {% comment %} Tickets {% endcomment %}
+    <div class="col-12 col-lg-6 mb-5 mb-xl-10">
+        <!--begin::Table Widget 4-->
+        <div class="card h-400px shadow-sm border-2">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-800">Articles propulaires</span>
+                    {% comment %} <span class="text-gray-500 mt-1 fw-semibold fs-6">Avg. 57 orders per day</span> {% endcomment %}
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Card header-->
+
+            <!--begin::Card body-->
+            <div class="card-body pt-2 overflow-auto">
+                <!--begin::Table-->
+                <div class="table-responsive">
+                    {% render_table products_table %}
+                </div>
+                <!--end::Table-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Table Widget 4-->
+    </div>
+  </div>
+  
+  
+
+</div>
+
+
+
+
+
+<div class="col-xl-3 mb-5 mb-xl-10">
+        
+  <!--begin::List widget 20-->
+  <div class="card card-stretch shadow-sm border-2 ">
+      <!--begin::Header-->
+      <div class="card-header">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bold text-gray-900">Actualités</span>
+      
+            {% comment %} <span class="text-muted mt-1 fw-semibold fs-7">8k social visitors</span> {% endcomment %}
+          </h3>
+      </div>
+      <!--end::Header-->
+  
+      <!--begin::Body-->
+      <div class="card-body pt-6 overflow-auto">
+        {% for n in news %}  
+          {% if not forloop.first %}
+            <!--begin::Separator-->
+            <div class="separator separator-dashed my-4"></div>
+            <!--end::Separator-->
+          {% endif %}
+
+          <!--begin::Item-->
+          <div class="d-flex flex-stack">  
+
+              <!--begin::Section-->
+              <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                  <!--begin:Author-->                    
+                  <div class="flex-grow-1 me-2">
+                      <span class="text-gray-800 text-hover-primary fs-6 fw-bold">
+                        {{ n.title }}
+                      </span>
+                      
+                      <span class="text-muted fw-semibold d-block fs-7">
+                        {{ n.content | linebreaksbr }}
+                      </span>
+                  </div>
+                  <!--end:Author-->                      
+                  
+                  {% comment %} <!--begin::Actions-->
+                  <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
+                      <i class="ki-duotone ki-arrow-right fs-2"><span class="path1"></span><span class="path2"></span></i>                    </a>
+                  <!--begin::Actions-->     {% endcomment %}
+              </div>
+              <!--end::Section-->
+          </div>
+          <!--end::Item-->
+        {% endfor %}   
+      </div>
+      <!--end::Body-->
+  </div>
+  <!--end::List widget 20-->
+  </div>
+</div>
+
+{% comment %} <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for banner in banners %}
+      <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner">
+    {% for banner in banners %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ banner.md_up_image.url }}" class="d-block w-100" alt="{{ banner.title }}" style="background-color: {{ banner.background_color }};">
+        <div class="carousel-caption d-none d-md-block" style="color: {{ banner.text_color }};">
+          <h5>{{ banner.title }}</h5>
+          <p>{{ banner.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> {% endcomment %}
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+{% endblock javascript%}
