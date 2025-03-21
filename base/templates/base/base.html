@@ -1,7 +1,7 @@
 {% load static %}
 {% load sc_settings_value %}
 <html lang="fr">
-<!--begin::Head-->
+
 <head>
     
     <title>{% block title %}{% endblock title %} {% sc_settings_value "APPLICATION_NAME" %}</title>
@@ -105,7 +105,7 @@
                     <!--end::Content-->
                 </div>
                 <!--end::Content wrapper-->
-                <!--begin::Footer-->
+
                 {% include "layout/_footer.html" %}
                 <!--end::Footer-->
             </div>
