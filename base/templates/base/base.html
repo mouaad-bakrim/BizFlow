@@ -1,10 +1,9 @@
 {% load static %}
-{% load sc_settings_value %}
 <html lang="fr">
 
 <head>
     
-    <title>{% block title %}{% endblock title %} {% sc_settings_value "APPLICATION_NAME" %}</title>
+    <title></title>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/logo/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/logo/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/logo/favicon/favicon-16x16.png">
@@ -98,7 +97,7 @@
                             {% block content %}
 
                             {% endblock %}
-                            {% include "order/order_add_modal.html" %}
+
                         </div>
                         <!--end::Content container-->
                     </div>

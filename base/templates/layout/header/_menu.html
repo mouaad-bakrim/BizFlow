@@ -42,7 +42,7 @@
 					</div>
 					<!--end::Chat--> {% endcomment %}
 
-					{% if perms.base.view_notification %}
+
 					<div class="app-navbar-item ms-2 ms-lg-6">
 						<div class="btn btn-icon btn-custom btn-color-gray-600 btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 							<i class="ki-outline ki-notification-on fs-1"></i>
@@ -95,7 +95,7 @@
 								{% endfor %}
 							</div>
 					
-							<a class="py-3 text-center border-top bg-hover-light" href="{% url "base:my_notifications" %}">
+							<a class="py-3 text-center border-top bg-hover-light" href="">
 								<span  class="btn btn-color-gray-600 btn-active-color-primary">
 									Tout voir
 									<i class="ki-outline ki-arrow-right fs-5"></i>
@@ -103,7 +103,7 @@
 							</a>
 						</div>
 					</div>
-					{% endif %}
+
 					
 
 
@@ -147,19 +147,19 @@
 
 							<!--begin::Menu separator-->
 							<div class="menu-item px-5">
-								<a href="{% url 'base:user_parameters' %}" class="menu-link px-5">Mon compte</a>
+								<a href="" class="menu-link px-5">Mon compte</a>
 							</div>
 							<!--end::Menu separator-->
 
 							<!--begin::Menu item-->
 							<div class="menu-item px-5 my-1">
-								<a href="{% url 'base:change_password' %}" class="menu-link px-5">Sécurité et connexion</a>
+								<a href="" class="menu-link px-5">Sécurité et connexion</a>
 							</div>
 							<!--end::Menu item-->
 							
 							<!--begin::Menu item-->
 							<div class="menu-item px-5">
-								<a href="{% url 'base:logout' %}" class="menu-link px-5">Se déconnecter</a>
+								<a href="" class="menu-link px-5">Se déconnecter</a>
 							</div>
 							<!--end::Menu item-->
 						</div>

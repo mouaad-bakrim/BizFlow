@@ -1,4 +1,3 @@
-{% load sc_settings_value %}
 
 
 	<div id="kt_app_footer" class="app-footer">
@@ -7,13 +6,13 @@
 						<!--begin::Copyright-->
 						<div class="text-gray-900 order-2 order-md-1">
 							<span class="text-muted fw-semibold me-">&copy; {% now "Y" %}</span>
-							<a href="{% sc_settings_value "COMPANY_WEBSITE" %}" target="_blank" class="text-muted fw-semibold  text-hover-primary">{% sc_settings_value "COMPANY_NAME" %}</a>
+							<a href="" target="_blank" class="text-muted fw-semibold  text-hover-primary"></a>
 						</div>
 						<!--end::Copyright-->
 						{% if not user.is_internal %}
 						<!--begin::Menu-->
 						<ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-							{% sc_settings_value "FAQ_ACTIVATED" as activate_faq %}
+
 							{% if activate_faq %}
 							<li class="menu-item">
 								<a href="{% url 'faq:faq' %}" class="menu-link px-2">Support</a>

@@ -29,8 +29,7 @@
 
 							
 							
-							{% if user.is_internal %}
-							{% if perms.client.view_client %}
+
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if active_menu == 'clients' %}here show{% endif %} ">
 									<!--begin:Menu link-->
 									<span class="menu-link">
@@ -48,7 +47,7 @@
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'client_list'  and active_menu == "clients"  %}active{% endif %}"
-											href="{% url 'client:listClient' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -61,7 +60,7 @@
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'bookmarked_client_list'  and active_menu == "clients"  %}active{% endif %}"
-											href="{% url 'client:listBookmarkedClient' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -74,8 +73,7 @@
 									</div>
 									<!--end:Menu sub-->
 								</div>
-							{% endif %}
-							{% if perms.order.view_order or perms.order.add_order %}
+
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if active_menu == 'orders' %}here show{% endif %} ">
 									<!--begin:Menu link-->
 									<span class="menu-link">
@@ -89,7 +87,7 @@
 									<!--end:Menu link-->
 									<!--begin:Menu sub-->
 									<div class="menu-sub menu-sub-accordion">
-									{% if user.is_internal and perms.order.add_order %}
+
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
@@ -103,13 +101,12 @@
 											<!--end:Menu link-->
 										</div>
 										<!--end:Menu item-->
-									{% endif %}
-									{% if perms.order.view_order %}
+
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if filter_status != 'scdraft' and  active_item == 'order_list' and not client_id %}active{% endif %}"
-											href="{% url 'order:order_list' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -118,13 +115,11 @@
 											<!--end:Menu link-->
 										</div>
 										<!--end:Menu item-->
-									{% endif %}
-									{% if perms.order.view_order and perms.order.can_confirm_order %}
-										<!--begin:Menu item-->
+
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if filter_status == 'scdraft' and active_item == 'order_list' and not client_id %}active{% endif %}"
-											href="{% url 'order:order_list_per_state' 'scdraft' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -132,14 +127,11 @@
 											</a>
 											<!--end:Menu link-->
 										</div>
-										<!--end:Menu item-->
-									{% endif %}
+
 									</div>
 									<!--end:Menu sub-->
 								</div>
-							{% endif %}
 
-							{% if perms.helpdesk.view_ticket or  perms.helpdesk.add_ticket %}
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if active_menu == 'tickets' %}here show{% endif %} ">
 									<!--begin:Menu link-->
 									<span class="menu-link">
@@ -153,12 +145,12 @@
 									<!--end:Menu link-->
 									<!--begin:Menu sub-->
 									<div class="menu-sub menu-sub-accordion">
-									{% if perms.helpdesk.add_ticket %}
+
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'add'  and active_menu == "tickets"  %}active{% endif %}"
-											href="{% url 'helpdesk:ticket_add' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -167,13 +159,12 @@
 											<!--end:Menu link-->
 										</div>
 										<!--end:Menu item-->
-									{% endif %}
-									{% if perms.helpdesk.view_ticket %}
+
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'all'  and active_menu == "tickets"  %}active{% endif %}"
-											href="{% url 'helpdesk:listTicket' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -186,7 +177,7 @@
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'assigned'  and active_menu == "tickets"  %}active{% endif %}"
-											href="{% url 'helpdesk:listAssignedTicket' %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -195,13 +186,11 @@
 											<!--end:Menu link-->
 										</div>
 										<!--end:Menu item-->
-									{% endif %}
+
 									</div>
 									<!--end:Menu sub-->
 								</div>
-							{% endif %}
 
-							{% else %}
 
 							
 							{% comment %} <!--start:Menu item-->
@@ -214,8 +203,7 @@
 							</div>
 							<!--end:Menu item--> {% endcomment %}
 							<!--begin:Menu item-->
-							{% with user.clientuser_set.all as clients %}
-								{% for cu in clients %}
+
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  {% if client_id == cu.client.pk or clients|length == 1  %}here show{% endif %} ">
 									<!--begin:Menu link-->
 									<span class="menu-link">
@@ -233,7 +221,7 @@
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'order_list' and client_id == cu.client.id %}active{% endif %}"
-											href="{% url 'order:order_list' client_id=cu.client.pk %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -246,7 +234,7 @@
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'order_add' and client_id == cu.client.id %}active{% endif %}"
-											href="{% url 'order:order_add' client_id=cu.client.pk %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -259,7 +247,7 @@
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link {% if active_item == 'product_list' and client_id == cu.client.id %}active{% endif %}"
-											href="{% url 'product:product_list' client_id=cu.client.pk %}">
+											href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -271,7 +259,7 @@
 										{% comment %} <div class="menu-item">
 											<!--begin:Menu link-->
 										<a class="menu-link {% if active_item == 'facture_list' and client_id == cu.client.id %}active{% endif %}"
-														href="{% url 'invoice:facture_list' client_id=cu.client.pk %}">
+														href="">
 											<span class="menu-bullet">
 												<span class="bullet bullet-dot"></span>
 											</span>
@@ -294,14 +282,13 @@
 									</div>
 									<!--end:Menu sub-->
 								</div>
-								{% endfor %}
-							{% endwith %}
 
-							{% if perms.helpdesk.add_ticket %}
+
+
 							<!--begin:Menu item-->
 							<div class="menu-item {% if active_menu == 'tickets' %}here show{% endif %}">
 								<!--begin::Menu link-->
-								<a class="menu-link {% if active_menu == 'tickets' %}active{% endif %}" href="{% url 'helpdesk:ticket_add' %}">
+								<a class="menu-link {% if active_menu == 'tickets' %}active{% endif %}" href="">
 									<!--begin::Bullet--> 
 									<span class="menu-icon">
 										<i class="bi bi-question-diamond fs-2"></i>
@@ -317,8 +304,8 @@
 								<!--end::Menu link-->                
 							</div>
 							<!--end:Menu item-->
-							{% endif %}
-							{% endif %}
+
+
 						
 						
 						</div>

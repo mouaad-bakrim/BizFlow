@@ -28,11 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 # Base
 SITE_URL = 'http://localhost:8000/'
-APPLICATION_NAME = "LEMO Self-Care"
-COMPANY_NAME = "Les Eaux Minérales d'Oulmès"
-COMPANY_WEBSITE = "https://www.oulmes.ma/"
-MACHINE_ID = "2708ee62875a7e3dd7cfaba71606b37329e7546b824a07596ad88f880cb611f3"
-# APP_LOGO_PATH = "assets/media/logos/5c1v2s7d/" # Massar
+APPLICATION_NAME = ""
+COMPANY_NAME = ""
+COMPANY_WEBSITE = ""
 APP_LOGO_PATH = "assets/media/logos/base9d451f12/" # Base
 
 # Application definition
@@ -85,10 +83,15 @@ WSGI_APPLICATION = 'BizFlow.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bizflow',
+        'USER': 'postgres',
+        'PASSWORD': 'orange..206',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
